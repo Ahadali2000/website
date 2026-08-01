@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Ilma | National Girlfriend Day</title>
+    <!-- Modern Elegant Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #fdf6f6;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text-main: #2b2b2b;
+            --text-muted: #6e6565;
+            --accent-rose: #e8a0bf;
+            --accent-deep: #c06c84;
+            --shadow-soft: 0 15px 35px rgba(232, 160, 191, 0.2);
+            --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, #fdf6f6 0%, #fbebed 50%, #fdf6f6 100%);
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- BACKGROUND FLOATING HEARTS CANVAS --- */
+        #heartCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* --- FLOATING MUSIC BUTTON --- */
+        .music-btn {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(232, 160, 191, 0.4);
+            color: var(--accent-deep);
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: var(--transition-smooth);
+        }
+
+        .music-btn:hover {
+            transform: scale(1.05);
+            background: white;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .music-icon {
+            font-size: 1rem;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        /* --- SCROLL REVEAL ANIMATION CLASSES --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: var(--transition-smooth);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 500;
+        }
+
+        .section-tag {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-deep);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: #38292d;
+        }
+
+        .subtitle {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 520px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 36px;
+            background: white;
+            border: 1px solid rgba(232, 160, 191, 0.6);
+            color: var(--accent-deep);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border-radius: 40px;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .btn:hover {
+            background: var(--accent-deep);
+            color: white;
+            border-color: var(--accent-deep);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(192, 108, 132, 0.35);
+        }
+
+        /* --- HERO SECTION --- */
+        #hero h1 {
+            font-size: 4.5rem;
+            font-style: italic;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #38292d, #c06c84);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInDown 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* --- TASK 1: QUIZ --- */
+        .quiz-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(255,255,255,0.8);
+            max-width: 480px;
+            width: 100%;
+            transition: var(--transition-smooth);
+        }
+
+        .quiz-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .quiz-opt {
+            padding: 15px 20px;
+            background: white;
+            border: 1px solid #f0dbe2;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: var(--transition-smooth);
+            color: var(--text-main);
+            text-align: left;
+        }
+
+        .quiz-opt:hover {
+            border-color: var(--accent-rose);
+            background: #fff8fa;
+            transform: translateX(8px);
+        }
+
+        .quiz-feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            background: #fbf0f3;
+            color: var(--accent-deep);
+            font-size: 0.95rem;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* --- TASK 2: ENVELOPE --- */
+        .envelope-wrapper {
+            perspective: 1000px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .envelope {
+            width: 320px;
+            height: 220px;
+            background: #f7d6e0;
+            border-radius: 16px;
+            position: relative;
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 110px solid #eeafc4;
+            transform-origin: top;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 3;
+        }
+
+        .letter-card {
+            position: absolute;
+            width: 280px;
+            height: 340px;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            top: 10px;
+            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .letter-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .letter-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .envelope-wrapper.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .envelope-wrapper.open .letter-card {
+            transform: translateY(-160px);
+            z-index: 4;
+        }
+
+        /* --- TASK 3: FOCUS CARDS --- */
+        .focus-container {
+            display: flex;
+            gap: 25px;
+            max-width: 700px;
+            width: 100%;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .focus-card {
+            flex: 1;
+            min-width: 280px;
+            height: 380px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .focus-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .focus-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(56, 41, 45, 0.85) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 25px;
+            color: white;
+            text-align: left;
+            transition: var(--transition-smooth);
+        }
+
+        .focus-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .focus-card:hover {
+            transform: translateY(-8px);
+        }
+
+        /* --- FINAL LETTER --- */
+        .final-card {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 28px;
+            max-width: 650px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(232, 160, 191, 0.3);
+            text-align: left;
+            position: relative;
+            transition: var(--transition-smooth);
+        }
+
+        .final-card::before {
+            content: "ILMA";
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: #fcebf0;
+            z-index: 0;
+            font-weight: 600;
+        }
+
+        .final-card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .final-card p {
+            max-width: 100%;
+            font-size: 1.05rem;
+            color: #4a4043;
+            line-height: 1.9;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .sign {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.4rem;
+            color: var(--accent-deep);
+            text-align: right;
+            margin-top: 30px;
+        }
+
+        /* --- KEYFRAMES --- */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Background Hearts Canvas -->
+    <canvas id="heartCanvas"></canvas>
+
+    <!-- Floating Background Music Player -->
+    <audio id="bgm" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112189.mp3" type="audio/mpeg">
+    </audio>
+
+    <button class="music-btn" id="musicBtn" onclick="toggleMusic()">
+        <span class="music-icon" id="musicIcon">🎵</span>
+        <span id="musicText">Play Music</span>
+    </button>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <span class="section-tag">National Girlfriend Day</span>
+        <h1>For My Wife, Ilma.</h1>
+        <p class="subtitle">A quiet celebration created with love by Ahad, honoring the warmth, beauty, and happiness you bring into my life every single day.</p>
+        <a href="#task1" class="btn" onclick="startExperience()">Begin Experience</a>
+    </section>
+
+    <!-- Task 1: Interactive Question -->
+    <section id="task1" class="reveal">
+        <span class="section-tag">Interactive Note #1</span>
+        <h2>A Little Question</h2>
+        <p class="subtitle">What do you think is Ahad's favorite thing about you, Ilma?</p>
+        
+        <div class="quiz-card">
+            <div class="quiz-options">
+                <div class="quiz-opt" onclick="showFeedback('Your radiant smile that brightens up even my toughest days.')">A. Your warm, beautiful smile</div>
+                <div class="quiz-opt" onclick="showFeedback('The way you understand me without saying a single word.')">B. Your caring & thoughtful nature</div>
+                <div class="quiz-opt" onclick="showFeedback('Trick question! It\'s literally EVERYTHING about you, Ilma.')">C. All of the above</div>
+            </div>
+            <div id="quizFeedback" class="quiz-feedback"></div>
+        </div>
+
+        <a href="#task2" class="btn" style="margin-top: 50px;">Continue</a>
+    </section>
+
+    <!-- Task 2: Envelope Unfold -->
+    <section id="task2" class="reveal">
+        <span class="section-tag">Interactive Note #2</span>
+        <h2>Unfold the Memory</h2>
+        <p class="subtitle">Click the envelope below to pull out your surprise card from Ahad.</p>
+
+        <div class="envelope-wrapper" id="envelopeWrapper" onclick="toggleEnvelope()">
+            <div class="envelope">
+                <div class="envelope-flap"></div>
+                <div class="letter-card">
+                    <!-- Replace photo1.jpeg with Ilma's image path -->
+                    <img src="photo1.jpeg" alt="Ilma Memory">
+                    <p>“Every moment spent with you feels like a quiet blessing. Happy Girlfriend Day, my love.” — Ahad</p>
+                </div>
+            </div>
+        </div>
+
+        <a href="#task3" class="btn" style="margin-top: 180px;">Next Moment</a>
+    </section>
+
+    <!-- Task 3: Focus Cards -->
+    <section id="task3" class="reveal">
+        <span class="section-tag">Interactive Note #3</span>
+        <h2>Moments in Time</h2>
+        <p class="subtitle">Hover over the cards to highlight the memories.</p>
+
+        <div class="focus-container">
+            <div class="focus-card">
+                <!-- Replace photo2.jpeg with Ilma's image path -->
+                <img src="photo2.jpeg" alt="Ilma Photo 2">
+                <div class="focus-overlay">
+                    <h3>My Greatest Choice</h3>
+                    <p style="font-size:0.85rem; color:#eee;">Marrying you was the best decision of my life.</p>
+                </div>
+            </div>
+            <div class="focus-card">
+                <!-- Replace photo3.jpeg with Ilma's image path -->
+                <img src="photo3.jpeg" alt="Ilma Photo 3">
+                <div class="focus-overlay">
+                    <h3>Forever Dating You</h3>
+                    <p style="font-size:0.85rem; color:#eee;">You will always remain my forever girlfriend.</p>
+                </div>
+            </div>
+        </div>
+
+        <a href="#final" class="btn" style="margin-top: 50px;">Read Final Letter</a>
+    </section>
+
+    <!-- Final Note -->
+    <section id="final" class="reveal">
+        <span class="section-tag">From The Heart</span>
+        <div class="final-card">
+            <div class="final-card-content">
+                <h2 style="font-size:2.2rem; margin-bottom:20px;">Dearest Ilma,</h2>
+                <p>
+                    National Girlfriend Day is a reminder to cherish the person who makes your world feel complete. But honestly, I don't need a specific calendar date to appreciate you. You are my confidante, my biggest comfort, and the person I fall in love with continuously.
+                </p>
+                <p>
+                    Thank you for being such an extraordinary wife and my forever girlfriend. Here is to creating countless more beautiful moments together.
+                </p>
+                <div class="sign">With all my love,<br>Your Husband, Ahad ❤️</div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // --- FLOATING HEARTS CANVAS ENGINE ---
+        const canvas = document.getElementById('heartCanvas');
+        const ctx = canvas.getContext('2d');
+        let hearts = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Heart {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 100;
+                this.size = Math.random() * 12 + 8;
+                this.speedY = Math.random() * 1.2 + 0.5;
+                this.speedX = Math.sin(Math.random() * Math.PI) * 0.5;
+                this.opacity = Math.random() * 0.5 + 0.3;
+                this.color = `rgba(${Math.floor(210 + Math.random() * 45)}, ${Math.floor(100 + Math.random() * 50)}, ${Math.floor(130 + Math.random() * 50)}, ${this.opacity})`;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.beginPath();
+                ctx.fillStyle = this.color;
+                ctx.translate(this.x, this.y);
+                ctx.scale(this.size / 20, this.size / 20);
+                ctx.moveTo(0, 0);
+                ctx.bezierCurveTo(-10, -10, -20, 5, 0, 18);
+                ctx.bezierCurveTo(20, 5, 10, -10, 0, 0);
+                ctx.fill();
+                ctx.restore();
+            }
+
+            update() {
+                this.y -= this.speedY;
+                this.x += Math.sin(this.y * 0.01) * 0.5;
+
+                if (this.y < -30) {
+                    this.y = canvas.height + 20;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+        }
+
+        function initHearts() {
+            hearts = [];
+            const count = Math.floor(window.innerWidth / 35); // Responsive density
+            for (let i = 0; i < count; i++) {
+                hearts.push(new Heart());
+            }
+        }
+
+        function animateHearts() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            hearts.forEach(heart => {
+                heart.update();
+                heart.draw();
+            });
+            requestAnimationFrame(animateHearts);
+        }
+
+        initHearts();
+        animateHearts();
+
+        // --- BGM Control Logic ---
+        const bgm = document.getElementById('bgm');
+        const musicBtn = document.getElementById('musicBtn');
+        const musicText = document.getElementById('musicText');
+        const musicIcon = document.getElementById('musicIcon');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                bgm.pause();
+                musicText.innerText = "Play Music";
+                musicIcon.innerText = "🎵";
+                isPlaying = false;
+            } else {
+                bgm.play().then(() => {
+                    musicText.innerText = "Pause Music";
+                    musicIcon.innerText = "🎶";
+                    isPlaying = true;
+                }).catch(err => console.log("Audio playback error:", err));
+            }
+        }
+
+        function startExperience() {
+            if (!isPlaying) {
+                toggleMusic();
+            }
+        }
+
+        // --- Scroll Reveal Observer API ---
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealOnScroll = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.25
+        });
+
+        revealElements.forEach((el) => revealOnScroll.observe(el));
+
+        // Task 1 Quiz Logic
+        function showFeedback(text) {
+            const fb = document.getElementById('quizFeedback');
+            fb.innerText = text;
+            fb.style.display = 'block';
+        }
+
+        // Task 2 Envelope Logic
+        function toggleEnvelope() {
+            document.getElementById('envelopeWrapper').classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
